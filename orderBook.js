@@ -27,6 +27,15 @@ const reconcileOrder = (existingBook, incomingOrder) => {
       return correspondingTypes(existingBook, incomingOrder)
     }
   }
+
+  for (let index = 0; index < existingBook.length; index++) {
+    if (incomingOrder.type !== existingBook[index].type && incomingOrder.quantity === existingBook[index].quantity && incomingOrder.price === existingBook[index].price) {
+      // remove existingBook[index] from existingBook array
+      existingBook.splice(existingBook[index], 1)
+
+      return existingBook
+    }
+  }
 }
 
 
@@ -34,11 +43,13 @@ const reconcileOrder = (existingBook, incomingOrder) => {
 const emptyBookOrder = (emptyExistingBook, incomingOrder) => {
   emptyExistingBook.push(incomingOrder)
 
+
   return emptyExistingBook
 }
 
 const matchingTypes = (existingBook, incomingOrder) => {
   existingBook.push(incomingOrder)
+
 
   return existingBook
 }
@@ -48,6 +59,10 @@ const correspondingTypes = (existingBook, incomingOrder) => {
 
   return existingBook
 }
+
+// const fufillMatchingOrder = (existingBook,) => {
+//   return existingBook
+// }
 
 
 
