@@ -33,7 +33,7 @@ const reconcileOrder = (existingBook, incomingOrder) => {
       // remove existingBook[index] from existingBook array
       existingBook.splice(existingBook[index], 1)
 
-      return existingBook
+      return fufillMatchingOrder(existingBook, incomingOrder)
     }
   }
 }
@@ -60,9 +60,9 @@ const correspondingTypes = (existingBook, incomingOrder) => {
   return existingBook
 }
 
-// const fufillMatchingOrder = (existingBook,) => {
-//   return existingBook
-// }
+const fufillMatchingOrder = (existingBook, incomingOrder) => {
+  return existingBook
+}
 
 
 
