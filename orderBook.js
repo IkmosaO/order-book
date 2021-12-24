@@ -8,63 +8,21 @@
 
 // create function test is calling for
 const reconcileOrder = (existingBook, incomingOrder) => {
-// adds an order to book when book is empty
-  const incomingOrderType = incomingOrder.type
-  const incomingOrderQuantity = incomingOrder.quantity
+  let bookArray = []
 
 
-
+  // if the existing book is empty, push the incoming order into the empty book
   if (existingBook.length === 0) {
-    existingBook.push(incomingOrder)
+    bookArray.push(incomingOrder)
 
-    return existingBook
+    return bookArray
   }
-
-  // adds an order to book when incomingOrder type + existingBook  
-  // types matches IE; when BOTH types are sell or buy
-  for (let index = 0; index < existingBook.length; index++) {
-    const existingBookType = existingBook[index].type
-    const existingBookQuantity = existingBook[index].quantity
-
-    if (incomingOrderType === existingBookType) {
-      existingBook.push(incomingOrder)
-
-      return existingBook
-    }
-    if (incomingOrderType !== existingBookType && incomingOrderQuantity !== existingBookQuantity) {
-      existingBook.push(incomingOrder)
-
-      return existingBook
-    }
-  }
-
-  //   for (let index = 0; index < existingBook.length; index++) {
-  //     if (incomingOrder.type !== existingBook[index].type && incomingOrder.quantity !== existingBook[index].quantity) {
-  //       return correspondingTypes(existingBook, incomingOrder)
-  //     }
-  //   }
 
   for (let index = 0; index < existingBook.length; index++) {
-    if (incomingOrder.type !== existingBook[index].type && incomingOrder.quantity === existingBook[index].quantity && incomingOrder.price === existingBook[index].price) {
-      // remove existingBook[index] from existingBook array
-      existingBook.splice(existingBook[index], 1)
-
-      return fufillMatchingOrder(existingBook, incomingOrder)
-    }
+    const bookOrder = array[index];
+    
   }
 }
-
-// const correspondingTypes = (existingBook, incomingOrder) => {
-//   existingBook.push(incomingOrder)
-
-//   return existingBook
-// }
-
-const fufillMatchingOrder = (existingBook, incomingOrder) => {
-  return existingBook
-}
-
-
 
 // export the function being called for
 module.exports = reconcileOrder
