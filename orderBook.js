@@ -1,28 +1,52 @@
-/* eslint-disable no-console */
-/* 1. This function compares an incoming transaction order to orders 
-    placed in an existing order book and acts accoringly after comparing them.
-2. This function accepts 1 array and 1 object
-3. This function returns an array
-*/
+const reconcileOrder = (bookOrders, incomingOrder) => {
+  let bookOrdersArray = []
+  let mismatchedOrdersArray = []
 
+  if (bookOrders.length === 0) {
+    bookOrdersArray.push(incomingOrder)
 
-// create function test is calling for
-const reconcileOrder = (existingBook, incomingOrder) => {
-  let bookArray = []
-
-
-  // if the existing book is empty, push the incoming order into the empty book
-  if (existingBook.length === 0) {
-    bookArray.push(incomingOrder)
-
-    return bookArray
+    return bookOrdersArray
   }
 
-  for (let index = 0; index < existingBook.length; index++) {
-    const bookOrder = array[index];
-    
+  for (let index = 0; index < bookOrders.length; index++) {
+    const bookOrder = bookOrders[index]
+
+    if (orderType(bookOrder, incomingOrder) && orderPrice(bookOrder, incomingOrder)) {
+      const completedOrder = matchedOrder(bookOrder, incomingOrder)
+
+      if (completedOrder.quantity > 0) {
+        bookOrdersArray.push(completedOrder)
+      }
+    } else {
+      mismatchedOrdersArray.push(bookOrder)
+    }
   }
+
+  if (incomingOrder.quantity > 0) {
+    bookOrdersArray.push(incomingOrder)
+  }
+
+  let newOrderBook = [...mismatchedOrdersArray, ...bookOrdersArray]
+
+  return newOrderBook
 }
 
-// export the function being called for
+const matchedOrder = (bookOrder, incomingOrder) => {
+  const lesserQuantity = Math.min(bookOrder.quantity, incomingOrder.quantity)
+
+  incomingOrder.quantity -= lesserQuantity
+  bookOrder.quantity -= lesserQuantity
+
+  return bookOrder
+}
+
+const orderType = (bookOrder, incomingOrder) => {
+  return bookOrder.type !== incomingOrder.type
+}
+
+const orderPrice = (bookOrder, incomingOrder) => {
+  return bookOrder.price === incomingOrder.price
+}
+
+
 module.exports = reconcileOrder
